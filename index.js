@@ -328,10 +328,14 @@ try {
 
 	(function UseClass() {
 		// Let Multiplier be a class with the appropriate methods to succeed.
-		let Multiplier = {
-			a(x) { return x.this; },
-			multiply(b) { return a * b; }
-		}
+		let Multiplier = class {
+			constructor(a) {
+				this.a = a;
+			}
+			multiply(b) {
+				return this.a * b;
+			}
+		};
 
 		// Don't make changes below this line	
 		
@@ -345,10 +349,10 @@ try {
 
   /// Template strings (bonus) ///
 
-  /*
 	(function UseTemplateStrings2() {
 		// Rewrite the line below to use a template string.
-		const text = 'line 1line 2';
+		const text = `line 1
+line 2`;
 
 		// Don't make changes below this line	
 		
@@ -356,22 +360,21 @@ try {
 		
 		solvedBonus++;
 	})();
-	*/
+
 
   /// Arrow functions (bonus) ///
 
-  /*
 	(function UseArrow3() {
 		// Rewrite all functions as arrow functions. Use as minimal syntax as possible.
-		let one = function () { return 1; };
-		let two = function (x) { return x + x; };
-		let three = function (x, y) { return x + y; };
-		let four = function (x, y) {
+		const one = () => 1;
+		const two = x => x + x;
+		const three = (x, y) => { return x + y };
+		const four = (x, y) => {
 			let result = 0;
 			for (let i = x; i < y; i++)
 				result += i;
 			return result;
-			};
+		};
 
 		// Don't make changes below this line	
 		
@@ -382,11 +385,10 @@ try {
 		
 		solvedBonus++;
 	})();
-	*/
+
 
   /// Destructuring (bonus) ///
 
-  /*
 	(function UseObjectDestructuring2() {
 		let obj = {
 			name: 'Oslo',
@@ -395,9 +397,7 @@ try {
 		}
 		
 		// Use object destructuring to change the 3 statements below into 1 statement.
-		let a = obj.name;
-		let b = obj.age;
-		let c = obj.add;
+		let {a = obj.name, b = obj.age, c = obj.add}= obj;
 
 		// Don't make changes below this line	
 		
@@ -407,14 +407,13 @@ try {
 		
 		solvedBonus++;
 	})();
-	*/
 
-  /*
+
 	(function UseFailSoftDestructuring() {
 		const arr = [1, 2];
 		
-    // change the left side (before =) below to let the tests succeed.
-		let [a, b] = arr;
+    	// change the left side (before =) below to let the tests succeed.
+		let [a, b, c = a + b, d] = arr;
 
 		// Don't make changes below this line	
 		
@@ -425,9 +424,8 @@ try {
 
 		solvedBonus++;
 	})();
-	*/
 
-  /*
+
 	(function UseNestedDestructuring() {
 		let obj = {
 			add: (x, y) => x + y,
@@ -436,9 +434,7 @@ try {
 			};
 		
 		// Use destructuring to change the 3 statements below into 1 statement.
-		let a = obj.add;
-		let b = obj.city.name;
-		let c = obj.arr.slice(1);
+		let {a = obj.add, b = obj.city.name, c = obj.arr.slice(1)} = obj;
 
 		// Don't make changes below this line	
 		
@@ -448,34 +444,32 @@ try {
 		
 		solvedBonus++;
 	})();
-	*/
 
-  /*
-  (function UseDestructuring() {
-    const arr = [1, 2, 3, 4];
 
-    // Use spread & destructuring in the following 2 lines to move the first entry to the last.
-    const [first, rest] = arr;
-    const newArr = [rest, first];
+	(function UseDestructuring() {
+    	const arr = [1, 2, 3, 4];
 
-    // Don't make changes below this line
+    	// Use spread & destructuring in the following 2 lines to move the first entry to the last.
+    	const [first, ...rest] = arr;
+    	const newArr = [...rest, first];
 
-    expect(newArr).toEqual([2, 3, 4, 1]);
+    	// Don't make changes below this line
 
-    solvedBonus++;
+    	expect(newArr).toEqual([2, 3, 4, 1]);
+
+    	solvedBonus++;
 	})();
-	*/
+
 
   /// Iterable (bonus) ///
 
-  /*
 	(function UseGeneratorFunction() {
 		// Rewrite the function below to be a generator function ("function*" and "yield").
-		function range(start, end) {
+		function* range(start, end) {
 			let list = [];
 			while (start < end) {
 				list.push(start);
-				start++;
+				yield start++;
 			}
 			return list;
 		}	
@@ -491,25 +485,25 @@ try {
 
 		solvedBonus++;
 	})();
-	*/
 
-  if (solved === toSolve) {
-    console.log(`
+
+	if (solved === toSolve) {
+		console.log(`
 >>> ✅ All tests pass! <<<`);
-    if (solvedBonus === toSolveBonus) {
-      console.log(`>>> ✅ All bonus tests pass! <<<
+    	if (solvedBonus === toSolveBonus) {
+			console.log(`>>> ✅ All bonus tests pass! <<<
 `);
-    } else {
-      console.warn(`>>> 🛑 Any time left? ${
-        toSolveBonus - solvedBonus
-      } bonus tests left to solve. <<<
+    	} else {
+			console.warn(`>>> 🛑 Any time left? ${
+			toSolveBonus - solvedBonus
+			} bonus tests left to solve. <<<
 `);
-    }
-  } else {
-    console.warn(`
+    	}
+	} else {
+    	console.warn(`
 >>> ✅ Correct! ${toSolve - solved} tests left to solve. <<<
 `);
-  }
+  	}
 } catch (e) {
-  console.error(e);
+	console.error(e);
 }
